@@ -12,8 +12,7 @@ const OtherUser = ({ user }) => {
     dispatch(setSelectedUser(user));
   };
 
-  // console.log(selectedUser, 'selected user'); 
-  // Check the selected user in the console
+ 
 
   return (
     <>

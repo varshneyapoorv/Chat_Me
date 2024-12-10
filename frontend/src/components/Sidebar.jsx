@@ -14,7 +14,7 @@ const Sidebar = () => {
   const logoutHandler = async() => {
     try {
       const res = await axios.get(`http://localhost:1234/api/v1/user/logout`);
-      console.log(res)
+      
       navigate('/login');
       toast.success(res.data.message);
     } catch (error) {
@@ -23,6 +23,7 @@ const Sidebar = () => {
   }
 
   return (
+    <>
     <div className='border-r border-slate-500 p-4 flex flex-col'>
       <form action="" className='flex items-center gap-2'>
         <input type="text" className='input input-bordered rounded-md' placeholder='Search...' />
@@ -40,6 +41,7 @@ const Sidebar = () => {
             </button>
         </div>
     </div>
+    </>
   )
 }
 
