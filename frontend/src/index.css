@@ -19,19 +19,18 @@ code {
     monospace;
 }
 
-
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   /* Customize the scrollbar width */
-  /* width:6px; */
-/* } */
+  width:6px;
+}
 
-/* ::-webkit-scrollbar-track { */
+::-webkit-scrollbar-track {
   /* Customize the scrollbar track */
-  /* background-color: aliceblue; */
-/* } */
+  background-color: aliceblue;
+}
 
-/* ::-webkit-scrollbar-thumb { */
+::-webkit-scrollbar-thumb {
   /* Customize the scrollbar thumb */
-  /* background: #1b1b1b; */
-  /* border-radius: 10px; */
-/* } */ 
+  background: #1b1b1b;
+  border-radius: 10px;
+}

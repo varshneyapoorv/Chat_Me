@@ -1,13 +1,15 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
+import daisyui from 'daisyui';  // Import DaisyUI plugin
+
 export default {
   content: [
-    "./index.html",        // Make sure index.html is being scanned
-    "./src/**/*.{js,ts,jsx,tsx}", // Ensure all your source files are included
+    "./index.html",        
+    "./src/**/*.{js,ts,jsx,tsx}", 
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    daisyui,  // Ensure DaisyUI plugin is included correctly
+    daisyui,  // Include DaisyUI plugin
   ],
 };
