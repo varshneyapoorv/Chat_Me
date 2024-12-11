@@ -2,24 +2,42 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { IoSend } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
+import { setMessages } from '../redux/messageSlice';
+
+
 
 const SendInput = () => {
 
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const {selectedUser} = useSelector(store=>store.user);  
+  const {messages} = useSelector(store=>store.message);
 
   const onSubmitHandler = async(e) => {
     e.preventDefault();
+    if (!message.trim()) return; // Prevent empty message
+
     try {
-      const res = await axios.post(`http://localhost:1234/api/v1/message/send/${selectedUser?._id}`);
+      const res = await axios.post(`http://localhost:1234/api/v1/message/send/${selectedUser?._id}`, {message}, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
       console.log(res)
-      
-    } catch (error) {
-      console.log(error)
-      
-    }
-    alert(message);
+
+      const newMessage = res?.data?.newMessage;
+
+      // Log the new message for debugging
+      console.log("New message sent:", newMessage);
+
+      // Dispatch the new message to Redux
+      dispatch(setMessages([...messages, newMessage]));
+      // dispatch(setMessages([...messages, res?.data?.newMessage]))
+        } catch (error) {
+            console.log(error);
+        } 
+        setMessage("");
   }
   return (
     <>
@@ -40,3 +58,5 @@ const SendInput = () => {
 }
 
 export default SendInput
+
+

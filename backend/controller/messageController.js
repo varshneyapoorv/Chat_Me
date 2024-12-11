@@ -28,10 +28,8 @@ export const sendMessage = async(req, res) => {
 
 
 
-        return res.status(200).json({
-            success: true,
-            message: "Message sent successfully",
-            data: newMessage
+        return res.status(201).json({
+            newMessage
         });
 
     } catch (error) {

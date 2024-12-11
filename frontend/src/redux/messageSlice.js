@@ -4,10 +4,11 @@ import { createSlice } from
 const messageSlice = createSlice({
     name : "message",
     initialState : {
-        messages : null
+        messages : []
     },
     reducers : {
         setMessages : (state, action)=>{
+            // console.log("Updating messages in Redux store:", action.payload);
             state.messages = action.payload;
         }
     }
