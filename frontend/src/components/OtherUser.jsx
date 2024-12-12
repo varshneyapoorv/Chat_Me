@@ -1,33 +1,32 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedUser } from '../redux/userSlice';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedUser } from "../redux/userSlice";
 
 const OtherUser = ({ user }) => {
   const dispatch = useDispatch();
-  const {selectedUser} = useSelector(store => store.user);
+  const { selectedUser, onlineUsers } = useSelector((store) => store.user);
+  console.log("onlineUsers:", onlineUsers);
+  const isOnline = Array.isArray(onlineUsers) && onlineUsers.includes(user._id);
 
   // Handler function to select the user
   const selectedUserHandler = (user) => {
-    console.log(user) // Dispatch the selected user
+    console.log(user); // Dispatch the selected user
     dispatch(setSelectedUser(user));
   };
-
- 
 
   return (
     <>
       <div
         onClick={() => selectedUserHandler(user)} // Select the user on click
         className={`${
-          selectedUser?._id === user?._id ? 'bg-zinc-200 text-black' : 'text-white'
+          selectedUser?._id === user?._id
+            ? "bg-zinc-200 text-black"
+            : "text-white"
         } flex gap-2 hover:text-black items-center hover:bg-zinc-200 rounded p-2 cursor-pointer`}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline ? "online" : ""}`}>
           <div className="w-12 h-12 rounded-full">
-            <img
-              src={user?.profilePhoto}
-              alt="user-profile"
-            />
+            <img src={user?.profilePhoto} alt="user-profile" />
           </div>
         </div>
 

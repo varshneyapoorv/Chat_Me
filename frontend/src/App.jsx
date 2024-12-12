@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import {createBrowserRouter, Router, RouterProvider} from 'react-router-dom'
 import HomePage from './components/HomePage'
 import Signup from './components/Signup'
 import Login from './components/Login'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import { setSocket } from './redux/socketSlice'
+import { setOnlineUsers } from './redux/userSlice'
 
 const router = createBrowserRouter([
   {
@@ -25,16 +27,39 @@ const router = createBrowserRouter([
 function app (){
 
   const [socket, setsocket] = useState(null);
-  const {authUser} = useSelector(store=>store.user);
+  const {authUser, onlineUsers} = useSelector(store=>store.user);
+  const dispatch = useDispatch();
+
   useEffect(()=>{
+
+    let socket = null;
+
     if(authUser){
-      const socket = io('http://localhost:1234',{
+      socket = io('http://localhost:1234/',{
         query:{
           userId:authUser._id
         }
       });
-      setsocket(socket);
+      dispatch(setSocket(socket));
+
+      socket?.on('getOnlineUsers', (onlineUsers)=>{
+        dispatch(setOnlineUsers(onlineUsers));
+        console.log('online users received', onlineUsers);
+      });
+      return () => socket.close();
+
+    }else{
+      if(socket) {
+        socket.close();
+        dispatch(setSocket(null));
+      }
     }
+
+    // return ()=>{
+    //   if(socket){
+    //     socket.disconnect();
+    //   }
+    // }
   }, [authUser])
 }
 
